@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.VitesseApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.VitesseApp" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryVariant</item>
+        <item name="android:colorAccent">@color/colorSecondary</item>
+        <item name="android:textColorPrimary">@color/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/colorOnSecondary</item>
+    </style>
 </resources>
