@@ -3,4 +3,7 @@
     <string name="hint_home_screen">Rechercher un candidat</string>
     <string name="tab_section_name_1">Section 1</string>
     <string name="tab_section_name_2">Section 2</string>
+    <string name="favoris">Favoris</string>
+    <string name="tous">Tous</string>
+    <string name="lorem_ipsum_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
 </resources>
