@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitesseapp.R
+import com.example.vitesseapp.databinding.FragmentTabBinding
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
 
 class RecyclerFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerAdapter
+    private var _binding: FragmentTabBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         fun newInstance(dataList: ArrayList<String>): RecyclerFragment {
@@ -29,14 +32,17 @@ class RecyclerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_tab, container, false)
-        recyclerView = view.findViewById(R.id.recyclerView)
+        _binding = FragmentTabBinding.inflate(inflater, container, false)
+        recyclerView = binding.recyclerView
+
 
         val dataList = arguments?.getStringArrayList("data") ?: arrayListOf()
-        adapter = RecyclerAdapter(dataList)
+        val descriptionList = arguments?.getStringArrayList("description") ?: arrayListOf()
+
+        adapter = RecyclerAdapter(dataList, descriptionList)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        return view
+        return binding.root
     }
 }

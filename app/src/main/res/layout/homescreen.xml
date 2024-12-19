@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_layout"
+    android:id="@+id/root_layout_home_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -27,7 +27,10 @@
             android:id="@+id/tabLayout"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:tabIndicator="@color/material_dynamic_neutral0"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabIndicatorHeight="1dp"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicator="@color/material_dynamic_primary10"
             app:tabTextColor="@color/material_dynamic_primary10">
 
             <com.google.android.material.tabs.TabItem
@@ -52,4 +55,14 @@
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_candidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_candidate_button"
+        android:src="@drawable/add_icon" />
+
 </FrameLayout>
+
