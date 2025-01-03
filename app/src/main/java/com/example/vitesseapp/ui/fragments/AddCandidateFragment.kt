@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.vitesseapp.databinding.DetailscreenBinding
 
 class AddCandidateFragment : Fragment() {
@@ -21,11 +22,8 @@ class AddCandidateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayoutAddScreen) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(top = insets.top + 15)
-            WindowInsetsCompat.CONSUMED
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

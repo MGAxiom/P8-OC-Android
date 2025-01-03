@@ -27,12 +27,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayoutHomeScreen) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(top = insets.top + 15)
-            WindowInsetsCompat.CONSUMED
-        }
-
         binding.fabAddCandidate.setOnClickListener {
             findNavController().navigate(R.id.action_homescreenFragment_to_addCandidateFragment)
         }
@@ -40,6 +34,9 @@ class HomeFragment : Fragment() {
 
         val adapter = ViewPagerAdapter(requireActivity())
         binding.viewPager.adapter = adapter
+        binding.viewPager.setOnClickListener {
+            //findNavController().navigate()
+        }
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
