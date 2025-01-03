@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
@@ -10,13 +10,27 @@
         android:name="com.example.vitesseapp.ui.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/homescreen">
-    <action
-        android:id="@+id/action_homescreenFragment_to_addCandidateFragment"
-        app:destination="@id/detailScreen" />
+        <action
+            android:id="@+id/action_homescreenFragment_to_addCandidateFragment"
+            app:destination="@id/detailScreen" />
+        <action
+            android:id="@+id/action_homescreenFragment_to_infoScreenFragment"
+            app:destination="@id/infoScreen" />
     </fragment>
 
-    <fragment android:id="@+id/detailScreen"
+    <fragment
+        android:id="@+id/detailScreen"
         android:name="com.example.vitesseapp.ui.fragments.AddCandidateFragment"
         android:label="fragment_detail"
         tools:layout="@layout/detailscreen" />
+
+    <fragment
+        android:id="@+id/infoScreen"
+        android:name="com.example.vitesseapp.ui.fragments.InfoScreenFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/infoscreen">
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

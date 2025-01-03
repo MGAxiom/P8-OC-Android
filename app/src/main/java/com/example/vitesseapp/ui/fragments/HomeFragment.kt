@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.vitesseapp.R
@@ -34,9 +31,6 @@ class HomeFragment : Fragment() {
 
         val adapter = ViewPagerAdapter(requireActivity())
         binding.viewPager.adapter = adapter
-        binding.viewPager.setOnClickListener {
-            //findNavController().navigate()
-        }
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {

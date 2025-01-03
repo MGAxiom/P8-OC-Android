@@ -1,13 +1,13 @@
 package com.example.vitesseapp.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitesseapp.R
 import com.example.vitesseapp.databinding.CandidatesListItemsBinding
+import com.example.vitesseapp.ui.fragments.HomeFragmentDirections
+
 
 class RecyclerAdapter(
     private val nameList: List<String>,
@@ -29,6 +29,10 @@ class RecyclerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(nameList[position], descriptionList[position])
+        holder.itemView.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(position)
+            it.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int = nameList.size
