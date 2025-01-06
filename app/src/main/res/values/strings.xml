@@ -10,7 +10,7 @@
     <string name="date_format">jj/mm/aaaa</string>
     <string name="add_candidate_button">Add candidate button</string>
     <string name="email">Email</string>
-    <string name="sauvegarder">Sauvegarder</string>
+    <string name="save">Save</string>
     <string name="birthday">Birthday</string>
     <string name="mm_dd_yyyy_x_years">MM/dd/yyyy (x years)</string>
     <string name="about">About</string>

@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.vitesseapp.ui.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/homescreen">
+        tools:layout="@layout/home_screen_fragment">
         <action
             android:id="@+id/action_homescreenFragment_to_addCandidateFragment"
             app:destination="@id/detailScreen" />
@@ -22,13 +22,18 @@
         android:id="@+id/detailScreen"
         android:name="com.example.vitesseapp.ui.fragments.AddCandidateFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/detailscreen" />
+        tools:layout="@layout/detail_screen_fragment">
+        <argument
+            android:name="isEditMode"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
 
     <fragment
         android:id="@+id/infoScreen"
         android:name="com.example.vitesseapp.ui.fragments.InfoScreenFragment"
         android:label="fragment_info"
-        tools:layout="@layout/infoscreen">
+        tools:layout="@layout/info_screen_fragment">
         <argument
             android:name="itemId"
             app:argType="integer" />
