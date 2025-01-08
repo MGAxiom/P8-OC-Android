@@ -1,4 +1,4 @@
-package com.example.vitesseapp.model
+package com.example.vitesseapp.data.models
 
 data class Candidate(
     val name: String,

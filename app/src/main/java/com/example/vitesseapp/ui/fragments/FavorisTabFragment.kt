@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vitesseapp.R
 import com.example.vitesseapp.databinding.FragmentTabBinding
-import com.example.vitesseapp.model.Candidate
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
 
 class FavorisTabFragment : Fragment() {
