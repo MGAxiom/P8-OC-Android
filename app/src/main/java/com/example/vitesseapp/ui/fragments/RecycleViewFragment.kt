@@ -39,7 +39,7 @@ class RecyclerFragment : Fragment() {
         val dataList = arguments?.getStringArrayList("data") ?: arrayListOf()
         val descriptionList = arguments?.getStringArrayList("description") ?: arrayListOf()
 
-        adapter = RecyclerAdapter(dataList, descriptionList)
+        adapter = RecyclerAdapter(emptyList())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 

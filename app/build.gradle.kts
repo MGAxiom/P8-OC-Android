@@ -68,19 +68,18 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.recyclerview)
-    implementation (libs.material.v180)
+    implementation(libs.material.v180)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
     //Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.compiler)
-    implementation(libs.androidx.ui.desktop)
 
     //Koin
     implementation(libs.koin.android)
-    implementation(libs.koin.androidx.viewmodel)
+    implementation(libs.koin.android.v400)
+
 
     //testing
     testImplementation(libs.junit)

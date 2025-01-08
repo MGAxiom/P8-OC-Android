@@ -25,7 +25,7 @@ class InfoScreenFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-        binding.toolbar.title = args.itemId.toString()
+        binding.toolbar.title = args.candidateId.toString()
     }
 
     override fun onDestroyView() {

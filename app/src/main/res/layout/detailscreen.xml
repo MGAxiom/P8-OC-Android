@@ -338,7 +338,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="15dp"
-        android:text="@string/sauvegarder"
+        android:text="@string/save"
         android:textAllCaps="false"
         android:background="@drawable/fab_background"
         android:contentDescription="@string/add_candidate_button"

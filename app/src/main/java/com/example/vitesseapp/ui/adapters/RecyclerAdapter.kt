@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitesseapp.R
+import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.CandidatesListItemsBinding
 import com.example.vitesseapp.ui.fragments.HomeFragmentDirections
 
 
 class RecyclerAdapter(
-    private val nameList: List<String>,
-    private val descriptionList: List<String>
+    private var candidates: List<Candidate>,
 ) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: CandidatesListItemsBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -28,12 +28,18 @@ class RecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(nameList[position], descriptionList[position])
+        val candidate = candidates[position]
+        holder.bind(candidate.name, candidate.description)
         holder.itemView.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(position)
+            val action = HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(position.toLong()) // Replace with my candidate id to retrieve it later
             it.findNavController().navigate(action)
         }
     }
 
-    override fun getItemCount(): Int = nameList.size
+    fun updateCandidates(newCandidates: List<Candidate>) {
+        candidates = newCandidates
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = candidates.size
 }

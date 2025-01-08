@@ -4,7 +4,12 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.example.vitesseapp.data.local.AppDatabase
 import com.example.vitesseapp.di.databaseModule
+import com.example.vitesseapp.domain.CandidateRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -16,6 +21,13 @@ class MainActivity : AppCompatActivity() {
         startKoin {
             androidContext(this@MainActivity)
             modules(databaseModule)
+        }
+
+        val database by lazy { AppDatabase.create(this) }
+        val repository by lazy { CandidateRepository(database.candidateDao()) }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            repository.insertInitialCandidates()
         }
 
         supportActionBar?.hide()

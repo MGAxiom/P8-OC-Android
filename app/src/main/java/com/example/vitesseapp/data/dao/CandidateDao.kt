@@ -5,10 +5,11 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.vitesseapp.data.models.Candidate
+import kotlinx.coroutines.flow.Flow
 
 interface CandidateDao {
     @Query("SELECT * FROM candidates")
-    fun getAllCandidates(): List<Candidate>
+    fun getAllCandidates(): Flow<List<Candidate>>
 
     @Query("SELECT * FROM candidates WHERE id = :id")
     fun getCandidateById(id: Int): Candidate?

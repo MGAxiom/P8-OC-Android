@@ -35,7 +35,7 @@
         android:label="fragment_info"
         tools:layout="@layout/info_screen_fragment">
         <argument
-            android:name="itemId"
-            app:argType="integer" />
+            android:name="candidateId"
+            app:argType="long" />
     </fragment>
 </navigation>
