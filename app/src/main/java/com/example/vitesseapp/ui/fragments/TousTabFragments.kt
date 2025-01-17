@@ -31,8 +31,8 @@ class TousTabFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeCandidates()
         setupRecyclerView()
+        observeCandidates()
 //        recyclerView = binding.recyclerView
 //        recyclerView.layoutManager = LinearLayoutManager(context)
 //

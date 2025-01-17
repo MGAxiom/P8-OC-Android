@@ -46,6 +46,10 @@ class CandidateViewModel(private val repository: CandidateRepository): ViewModel
         repository.getCandidateById(id)
     }
 
+    fun getFavoriteCandidates() = viewModelScope.launch {
+        repository.getAllFavoriteCandidates()
+    }
+
     fun searchCandidates(query: String) = viewModelScope.launch {
         repository.searchCandidates(query)
     }

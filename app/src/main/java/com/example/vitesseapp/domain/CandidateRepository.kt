@@ -3,11 +3,10 @@ package com.example.vitesseapp.domain
 import com.example.vitesseapp.R
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.data.dao.CandidateDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import com.example.vitesseapp.data.toDomainModel
+import com.example.vitesseapp.data.toEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class CandidateRepository(private val candidateDao: CandidateDao) {
 
@@ -55,35 +54,39 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
             )
         )
         candidates.forEach { candidate ->
-            candidateDao.insertCandidate(candidate)
+            candidateDao.insertCandidate(candidate.toEntity())
         }
     }
 
-    suspend fun getAllCandidates(): StateFlow<List<Candidate>> {
-        return candidateDao.getAllCandidates().stateIn(
-            scope = CoroutineScope(Dispatchers.IO),
-            started = SharingStarted.Eagerly,
-            initialValue = emptyList()
-        )
+    fun getAllCandidates(): Flow<List<Candidate>> {
+        return candidateDao.getAllCandidates().map { entities ->
+            entities.map { it.toDomainModel() }
+        }
     }
 
     suspend fun insertCandidate(candidate: Candidate) {
-        candidateDao.insertCandidate(candidate)
+        candidateDao.insertCandidate(candidate.toEntity())
     }
 
     suspend fun updateCandidate(candidate: Candidate) {
-        candidateDao.updateCandidate(candidate)
+        candidateDao.updateCandidate(candidate.toEntity())
     }
 
     suspend fun deleteCandidate(candidate: Candidate) {
-        candidateDao.deleteCandidate(candidate)
+        candidateDao.deleteCandidate(candidate.toEntity())
     }
 
     suspend fun getCandidateById(id: Int): Candidate? {
-        return candidateDao.getCandidateById(id)
+        return candidateDao.getCandidateById(id)?.toDomainModel()
     }
 
     suspend fun searchCandidates(query: String): List<Candidate> {
-        return candidateDao.searchCandidates("%$query%")
+        return candidateDao.searchCandidates(query).map { it.toDomainModel() }
+    }
+
+    fun getAllFavoriteCandidates(): Flow<List<Candidate>> {
+        return candidateDao.getFavoriteCandidates().map { entities ->
+            entities.map { it.toDomainModel() }
+        }
     }
 }
