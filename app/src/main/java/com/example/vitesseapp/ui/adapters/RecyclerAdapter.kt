@@ -15,9 +15,9 @@ class RecyclerAdapter(
 ) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: CandidatesListItemsBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(name: String, description: String) {
+        fun bind(name: String, notes: String) {
             binding.candidateName.text = name
-            binding.description.text = description
+            binding.description.text = notes
             binding.candidateImage.setImageResource(R.drawable.avatar_gris_placeholder)
         }
     }
@@ -29,9 +29,9 @@ class RecyclerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val candidate = candidates[position]
-        holder.bind(candidate.name, candidate.description)
+        holder.bind(candidate.name, candidate.notes)
         holder.itemView.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(position.toLong()) // Replace with my candidate id to retrieve it later
+            val action = HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(candidate.id)
             it.findNavController().navigate(action)
         }
     }

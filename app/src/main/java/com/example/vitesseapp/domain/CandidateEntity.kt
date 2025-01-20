@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class CandidateEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val description: String,
+    val birthday: Long,
     val favorite: Boolean,
     val imageResId: Int,
     val phone: Int,

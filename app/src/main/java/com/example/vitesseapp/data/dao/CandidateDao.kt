@@ -14,11 +14,11 @@ interface CandidateDao {
     @Query("SELECT * FROM candidates")
     fun getAllCandidates(): Flow<List<CandidateEntity>>
 
-    @Query("SELECT * FROM candidates WHERE favorite = 1")
+    @Query("SELECT * FROM candidates WHERE favorite = true")
     fun getFavoriteCandidates(): Flow<List<CandidateEntity>>
 
     @Query("SELECT * FROM candidates WHERE id = :id")
-    fun getCandidateById(id: Int): CandidateEntity?
+    suspend fun getCandidateById(id: Int): CandidateEntity?
 
     @Insert
     suspend fun insertCandidate(candidate: CandidateEntity)
@@ -29,6 +29,6 @@ interface CandidateDao {
     @Delete
     suspend fun deleteCandidate(candidate: CandidateEntity)
 
-    @Query("SELECT * FROM candidates WHERE name LIKE :searchQuery OR description LIKE :searchQuery")
+    @Query("SELECT * FROM candidates WHERE name LIKE :searchQuery")
     suspend fun searchCandidates(searchQuery: String): List<CandidateEntity>
 }

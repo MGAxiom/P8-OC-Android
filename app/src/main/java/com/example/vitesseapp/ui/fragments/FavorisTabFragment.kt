@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.FragmentTabBinding
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
+import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavorisTabFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerAdapter
+    private val viewModel: CandidateViewModel by viewModel()
     private var _binding: FragmentTabBinding? = null
     private val binding get() = _binding!!
 
@@ -32,13 +35,6 @@ class FavorisTabFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeFavoriteCandidates()
-//        recyclerView = binding.recyclerView
-//        recyclerView.layoutManager = LinearLayoutManager(context)
-//
-//        // Example data - replace with your actual data
-//        val favouriteCandidates = listOf(Candidate)
-//        adapter = RecyclerAdapter(names, descriptions)
-//        recyclerView.adapter = adapter
     }
 
     private fun setupRecyclerView() {
@@ -49,11 +45,16 @@ class FavorisTabFragment : Fragment() {
     }
 
     private fun observeFavoriteCandidates() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.favoriteCandidates.collect { favorites ->
-//                adapter.updateCandidates(favorites)
-//            }
-//        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.favoriteCandidates.collect { favorites ->
+                adapter.updateCandidates(favorites)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadFavouriteCandidates()
     }
 
     override fun onDestroyView() {

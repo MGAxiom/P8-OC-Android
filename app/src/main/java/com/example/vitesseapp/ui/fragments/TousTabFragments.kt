@@ -33,14 +33,6 @@ class TousTabFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeCandidates()
-//        recyclerView = binding.recyclerView
-//        recyclerView.layoutManager = LinearLayoutManager(context)
-//
-//        // Example data - replace with your actual data
-//        val names = listOf("Philippe", "Item 2", "Item 3")
-//        val descriptions = listOf("Description 1", "Description 2", "Description 3")
-//        adapter = RecyclerAdapter(names, descriptions)
-//        recyclerView.adapter = adapter
     }
 
     private fun setupRecyclerView() {
@@ -57,6 +49,12 @@ class TousTabFragment : Fragment() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadCandidates()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

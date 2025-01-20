@@ -7,6 +7,7 @@ import com.example.vitesseapp.data.toDomainModel
 import com.example.vitesseapp.data.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.Date
 
 class CandidateRepository(private val candidateDao: CandidateDao) {
 
@@ -14,7 +15,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
         val candidates = listOf(
             Candidate(
                 name = "John Doe",
-                description = "Software Developer",
+                birthday = System.currentTimeMillis(),
                 favorite = false,
                 imageResId = R.drawable.avatar_gris_placeholder,
                 phone = 123456789,
@@ -24,7 +25,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
             ),
             Candidate(
                 name = "Jane Smith",
-                description = "UX Designer",
+                birthday = System.currentTimeMillis(),
                 favorite = false,
                 imageResId = R.drawable.avatar_gris_placeholder,
                 phone = 987654321,
@@ -34,7 +35,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
             ),
             Candidate(
                 name = "Alice Johnson",
-                description = "Project Manager",
+                birthday = System.currentTimeMillis(),
                 favorite = true,
                 imageResId = R.drawable.avatar_gris_placeholder,
                 phone = 555555555,
@@ -44,7 +45,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
             ),
             Candidate(
                 name = "Bob Wilson",
-                description = "Data Scientist",
+                birthday = System.currentTimeMillis(),
                 favorite = true,
                 imageResId = R.drawable.avatar_gris_placeholder,
                 phone = 444444444,

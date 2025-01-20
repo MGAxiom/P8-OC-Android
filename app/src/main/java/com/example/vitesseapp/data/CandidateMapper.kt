@@ -6,7 +6,7 @@ import com.example.vitesseapp.domain.CandidateEntity
 fun Candidate.toEntity() = CandidateEntity(
     id = id,
     name = name,
-    description = description,
+    birthday = birthday,
     favorite = favorite,
     imageResId = imageResId,
     phone = phone,
@@ -18,7 +18,7 @@ fun Candidate.toEntity() = CandidateEntity(
 fun CandidateEntity.toDomainModel() = Candidate(
     id = id,
     name = name,
-    description = description,
+    birthday = birthday,
     favorite = favorite,
     imageResId = imageResId,
     phone = phone,

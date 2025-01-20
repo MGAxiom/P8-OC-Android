@@ -201,6 +201,7 @@
                         android:textSize="11sp" />
 
                     <TextView
+                        android:id="@+id/birthday_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="16dp"
@@ -243,6 +244,7 @@
                         android:textSize="11sp"/>
 
                     <TextView
+                        android:id="@+id/salary_eur_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="16dp"
@@ -251,6 +253,7 @@
                         android:textSize="11sp"/>
 
                     <TextView
+                        android:id="@+id/salary_gbp_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="16dp"
@@ -274,10 +277,12 @@
                 app:cardBackgroundColor="#20800080">
 
                 <LinearLayout
+                    android:id="@+id/notes_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/notes_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
@@ -286,9 +291,11 @@
                         android:textSize="11sp"/>
 
                     <ScrollView
+                        android:id="@+id/notes_scroll_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/notes_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/lorem_ipsum_description"
