@@ -1,16 +1,26 @@
 package com.example.vitesseapp.ui.fragments
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.DetailScreenFragmentBinding
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
@@ -24,6 +34,8 @@ class AddCandidateFragment : Fragment() {
     private val args: AddCandidateFragmentArgs by navArgs()
     private val viewModel: CandidateViewModel by viewModel()
     private var birthday: Long = 0
+    private lateinit var pickImage: ActivityResultLauncher<String>
+    private var pickedImageUri: Uri? = null
 
 
     override fun onCreateView(
@@ -32,6 +44,15 @@ class AddCandidateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DetailScreenFragmentBinding.inflate(inflater, container, false)
+
+        pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                pickedImageUri = it
+                Glide.with(requireContext())
+                    .load(it)
+                    .into(binding.imageView)
+            }
+        }
         return binding.root
     }
 
@@ -40,6 +61,10 @@ class AddCandidateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
+        }
+
+        binding.imageView.setOnClickListener {
+            launchPhotoPicker()
         }
 
         binding.datePickerCard.setOnClickListener {
@@ -60,12 +85,12 @@ class AddCandidateFragment : Fragment() {
                         expectedSalary = binding.editTextMoney.text.toString().toInt(),
                         notes = binding.editTextNote.text.toString(),
                         favorite = false,
-                        imageResId = binding.imageView.id
+                        imageResUri = pickedImageUri.toString()
                     )
 
                 )
                 updateToolbarTitle(true)
-            }
+           }
         }
     }
 
@@ -104,13 +129,12 @@ class AddCandidateFragment : Fragment() {
             binding.textInputLayoutPhone.error = null
         }
 
-        if (isValidEmail(binding.editTextEmail.text.toString())) {
+        if (!isValidEmail(binding.editTextEmail.text.toString())) {
             binding.textInputLayoutEmail.error = "Invalid Format"
             isValid = false
         } else {
             binding.textInputLayoutEmail.error = null
         }
-
         return isValid
     }
 
@@ -139,5 +163,9 @@ class AddCandidateFragment : Fragment() {
     private fun isValidEmail(email: String): Boolean {
         val emailPattern = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$")
         return emailPattern.matches(email)
+    }
+
+    private fun launchPhotoPicker() {
+        pickImage.launch("image/*")
     }
 }

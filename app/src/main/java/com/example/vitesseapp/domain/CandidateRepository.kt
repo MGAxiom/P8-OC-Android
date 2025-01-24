@@ -1,5 +1,6 @@
 package com.example.vitesseapp.domain
 
+import android.net.Uri
 import com.example.vitesseapp.R
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.data.dao.CandidateDao
@@ -7,17 +8,19 @@ import com.example.vitesseapp.data.toDomainModel
 import com.example.vitesseapp.data.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.util.Date
 
 class CandidateRepository(private val candidateDao: CandidateDao) {
 
     suspend fun insertInitialCandidates() {
+        val placeholderImageUri = Uri.parse("android.resource://com.example.vitesseapp/${R.drawable.avatar_gris_placeholder}")
+        val placeholderImageString = placeholderImageUri.toString()
+
         val candidates = listOf(
             Candidate(
                 name = "John Doe",
                 birthday = System.currentTimeMillis(),
                 favorite = false,
-                imageResId = R.drawable.avatar_gris_placeholder,
+                imageResUri = placeholderImageString,
                 phone = 123456789,
                 email = "john@example.com",
                 expectedSalary = 75000,
@@ -27,7 +30,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
                 name = "Jane Smith",
                 birthday = System.currentTimeMillis(),
                 favorite = false,
-                imageResId = R.drawable.avatar_gris_placeholder,
+                imageResUri = placeholderImageString,
                 phone = 987654321,
                 email = "jane@example.com",
                 expectedSalary = 80000,
@@ -37,7 +40,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
                 name = "Alice Johnson",
                 birthday = System.currentTimeMillis(),
                 favorite = true,
-                imageResId = R.drawable.avatar_gris_placeholder,
+                imageResUri = placeholderImageString,
                 phone = 555555555,
                 email = "alice@example.com",
                 expectedSalary = 90000,
@@ -47,7 +50,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
                 name = "Bob Wilson",
                 birthday = System.currentTimeMillis(),
                 favorite = true,
-                imageResId = R.drawable.avatar_gris_placeholder,
+                imageResUri = placeholderImageString,
                 phone = 444444444,
                 email = "bob@example.com",
                 expectedSalary = 85000,

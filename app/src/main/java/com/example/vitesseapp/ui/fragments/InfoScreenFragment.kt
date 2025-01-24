@@ -1,5 +1,6 @@
 package com.example.vitesseapp.ui.fragments
 
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,6 +55,7 @@ class InfoScreenFragment : Fragment() {
 
 
     private fun displayCandidateInfo(candidate: Candidate) {
+        binding.candidateImageInfo.setImageURI(Uri.parse(candidate.imageResUri))
         binding.toolbar.title = candidate.name
         binding.notesText.text = candidate.notes
         binding.birthdayText.text = formatDate(candidate.birthday)

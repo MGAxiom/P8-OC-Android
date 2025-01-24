@@ -9,7 +9,7 @@ data class CandidateEntity(
     val name: String,
     val birthday: Long,
     val favorite: Boolean,
-    val imageResId: Int,
+    val imageResUri: String,
     val phone: Int,
     val email: String,
     val expectedSalary: Int,

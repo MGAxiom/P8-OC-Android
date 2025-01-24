@@ -73,6 +73,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    //ImageLoading
+    implementation(libs.glide)
+    
     //Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

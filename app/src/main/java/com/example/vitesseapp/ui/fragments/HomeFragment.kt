@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.vitesseapp.R
-import com.example.vitesseapp.databinding.HomescreenBinding
+import com.example.vitesseapp.databinding.HomeScreenFragmentBinding
 import com.example.vitesseapp.ui.adapters.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
 
-    private var _binding: HomescreenBinding? = null
+    private var _binding: HomeScreenFragmentBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = HomescreenBinding.inflate(inflater, container, false)
+        _binding = HomeScreenFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
