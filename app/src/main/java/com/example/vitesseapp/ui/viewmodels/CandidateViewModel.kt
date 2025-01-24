@@ -15,6 +15,7 @@ class CandidateViewModel(private val repository: CandidateRepository): ViewModel
 
     internal val candidates = MutableStateFlow<List<Candidate>>(emptyList())
     internal val favoriteCandidates = MutableStateFlow<List<Candidate>>(emptyList())
+    val createdId = MutableStateFlow(0)
 
     init {
         loadCandidates()
@@ -38,7 +39,7 @@ class CandidateViewModel(private val repository: CandidateRepository): ViewModel
     }
 
     fun insertCandidate(candidate: Candidate) = viewModelScope.launch {
-        repository.insertCandidate(candidate)
+        createdId.value = repository.insertCandidate(candidate).toInt()
     }
 
     fun updateCandidate(candidate: Candidate) = viewModelScope.launch {

@@ -27,16 +27,6 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
                 notes = "Experienced in Kotlin"
             ),
             Candidate(
-                name = "Jane Smith",
-                birthday = System.currentTimeMillis(),
-                favorite = false,
-                imageResUri = placeholderImageString,
-                phone = 987654321,
-                email = "jane@example.com",
-                expectedSalary = 80000,
-                notes = "Creative and detail-oriented"
-            ),
-            Candidate(
                 name = "Alice Johnson",
                 birthday = System.currentTimeMillis(),
                 favorite = true,
@@ -46,16 +36,6 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
                 expectedSalary = 90000,
                 notes = "Certified PMP"
             ),
-            Candidate(
-                name = "Bob Wilson",
-                birthday = System.currentTimeMillis(),
-                favorite = true,
-                imageResUri = placeholderImageString,
-                phone = 444444444,
-                email = "bob@example.com",
-                expectedSalary = 85000,
-                notes = "Expert in machine learning"
-            )
         )
         candidates.forEach { candidate ->
             candidateDao.insertCandidate(candidate.toEntity())
@@ -68,8 +48,8 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
         }
     }
 
-    suspend fun insertCandidate(candidate: Candidate) {
-        candidateDao.insertCandidate(candidate.toEntity())
+    suspend fun insertCandidate(candidate: Candidate): Long {
+        return candidateDao.insertCandidate(candidate.toEntity())
     }
 
     suspend fun updateCandidate(candidate: Candidate) {

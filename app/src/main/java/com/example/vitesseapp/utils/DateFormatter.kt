@@ -8,6 +8,15 @@ import java.util.Calendar
 import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
+fun formatDateWithYears(birthday: Long): String {
+    val birthday = Date(birthday).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    val formattedDate = birthday.format(formatter)
+    val year = Calendar.getInstance().get(Calendar.YEAR)
+    val age = year - birthday.year
+    return "$formattedDate ($age years)"
+}
+@RequiresApi(Build.VERSION_CODES.O)
 fun formatDate(birthday: Long): String {
     val birthday = Date(birthday).toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
     val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")

@@ -21,7 +21,7 @@ interface CandidateDao {
     suspend fun getCandidateById(id: Int): CandidateEntity?
 
     @Insert
-    suspend fun insertCandidate(candidate: CandidateEntity)
+    suspend fun insertCandidate(candidate: CandidateEntity): Long
 
     @Update
     suspend fun updateCandidate(candidate: CandidateEntity)

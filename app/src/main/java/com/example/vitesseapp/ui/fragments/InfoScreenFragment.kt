@@ -11,10 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.example.vitesseapp.R
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.InfoScreenFragmentBinding
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
-import com.example.vitesseapp.utils.formatDate
+import com.example.vitesseapp.utils.formatDateWithYears
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -55,10 +57,13 @@ class InfoScreenFragment : Fragment() {
 
 
     private fun displayCandidateInfo(candidate: Candidate) {
-        binding.candidateImageInfo.setImageURI(Uri.parse(candidate.imageResUri))
+        Glide.with(requireContext())
+            .load(Uri.parse(candidate.imageResUri))
+            .placeholder(R.drawable.avatar_gris_placeholder)
+            .into(binding.candidateImageInfo)
         binding.toolbar.title = candidate.name
         binding.notesText.text = candidate.notes
-        binding.birthdayText.text = formatDate(candidate.birthday)
+        binding.birthdayText.text = formatDateWithYears(candidate.birthday)
         binding.salaryEurText.text = "${candidate.expectedSalary} €"
     }
 

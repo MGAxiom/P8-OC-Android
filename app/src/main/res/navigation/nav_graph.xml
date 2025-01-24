@@ -23,10 +23,14 @@
         android:name="com.example.vitesseapp.ui.fragments.AddCandidateFragment"
         android:label="fragment_detail"
         tools:layout="@layout/detail_screen_fragment">
-        <argument
-            android:name="isEditMode"
-            android:defaultValue="false"
-            app:argType="boolean" />
+        <action
+            android:id="@+id/action_detailScreenFragment_to_infoScreenFragment"
+            app:destination="@id/infoScreen"
+            app:popUpTo="@id/homeFragment">
+            <argument
+                android:name="candidateId"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
