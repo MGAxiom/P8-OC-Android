@@ -53,8 +53,8 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
         return candidateDao.insertCandidate(candidate.toEntity())
     }
 
-    suspend fun updateCandidate(candidate: Candidate) {
-        candidateDao.updateCandidate(candidate.toEntity())
+    suspend fun toggleFavoriteStatus(candidate: Candidate) {
+        candidateDao.updateCandidate(candidate.id, !candidate.favorite)
     }
 
     suspend fun deleteCandidate(candidate: Candidate) {

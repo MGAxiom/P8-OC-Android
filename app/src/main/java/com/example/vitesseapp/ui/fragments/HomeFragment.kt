@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
 
     private fun updateCurrentTab(query: String) {
         val currentPosition = binding.viewPager.currentItem
-        viewPagerAdapter.getFragment(currentPosition).updateSearch(query)
+        viewPagerAdapter.getFragment(currentPosition)?.updateSearch(query)
     }
 
     override fun onDestroyView() {

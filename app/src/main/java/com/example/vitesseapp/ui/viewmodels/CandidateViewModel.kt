@@ -18,6 +18,7 @@ class CandidateViewModel(private val repository: CandidateRepository): ViewModel
     private val searchQuery = MutableStateFlow("")
     internal val candidates = MutableStateFlow<List<Candidate>>(emptyList())
     internal val favoriteCandidates = MutableStateFlow<List<Candidate>>(emptyList())
+    internal val candidateDetails = MutableStateFlow<Candidate?>(null)
     val createdId = MutableStateFlow(0)
 
     init {
@@ -59,8 +60,9 @@ class CandidateViewModel(private val repository: CandidateRepository): ViewModel
         createdId.value = repository.insertCandidate(candidate).toInt()
     }
 
-    fun updateCandidate(candidate: Candidate) = viewModelScope.launch {
-        repository.updateCandidate(candidate)
+    fun toggleFavorite(candidate: Candidate) = viewModelScope.launch {
+        repository.toggleFavoriteStatus(candidate)
+
     }
 
     fun deleteCandidate(candidate: Candidate) = viewModelScope.launch {

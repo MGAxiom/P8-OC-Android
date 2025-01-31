@@ -23,8 +23,8 @@ interface CandidateDao {
     @Insert
     suspend fun insertCandidate(candidate: CandidateEntity): Long
 
-    @Update
-    suspend fun updateCandidate(candidate: CandidateEntity)
+    @Query ("UPDATE candidates SET favorite = :isFavorite WHERE id = :candidateId")
+    suspend fun updateCandidate(candidateId: Int, isFavorite: Boolean)
 
     @Delete
     suspend fun deleteCandidate(candidate: CandidateEntity)
