@@ -8,33 +8,50 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class CandidateViewModel(private val repository: CandidateRepository): ViewModel() {
 
+    private val searchQuery = MutableStateFlow("")
     internal val candidates = MutableStateFlow<List<Candidate>>(emptyList())
     internal val favoriteCandidates = MutableStateFlow<List<Candidate>>(emptyList())
     val createdId = MutableStateFlow(0)
 
     init {
-        loadCandidates()
-        loadFavouriteCandidates()
+        loadCandidates("")
+        loadFavoriteCandidates("")
     }
 
-    fun loadCandidates() {
+    fun setSearchQuery(query: String) {
         viewModelScope.launch {
-            repository.getAllCandidates().collect { candidateList ->
-                candidates.value = candidateList
-            }
+            searchQuery.value = query
+            loadCandidates(query)
+            loadFavoriteCandidates(query)
         }
     }
 
-    fun loadFavouriteCandidates() {
+    fun loadCandidates(query: String) {
         viewModelScope.launch {
-            repository.getAllFavoriteCandidates().collect { favoriteCandidateList ->
-                favoriteCandidates.value = favoriteCandidateList
+            val allCandidates = if (query.isEmpty()) {
+                repository.getAllCandidates().first()
+            } else {
+                repository.searchCandidates("%$query%").first()
             }
+            candidates.value = allCandidates
+        }
+    }
+
+    fun loadFavoriteCandidates(query: String) {
+        viewModelScope.launch {
+            val favorites = if (query.isEmpty()) {
+                repository.getAllFavoriteCandidates().first()
+            } else {
+                repository.searchFavouriteCandidates("%$query%").first()
+            }
+            favoriteCandidates.value = favorites
         }
     }
 
@@ -55,6 +72,9 @@ class CandidateViewModel(private val repository: CandidateRepository): ViewModel
     }
 
     fun searchCandidates(query: String) = viewModelScope.launch {
-        repository.searchCandidates(query)
+        repository.searchCandidates(query).collect { candidateList ->
+            candidates.value = candidateList
+        }
+
     }
 }

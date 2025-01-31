@@ -29,6 +29,10 @@ interface CandidateDao {
     @Delete
     suspend fun deleteCandidate(candidate: CandidateEntity)
 
-    @Query("SELECT * FROM candidates WHERE name LIKE :searchQuery")
-    suspend fun searchCandidates(searchQuery: String): List<CandidateEntity>
+    @Query("SELECT * FROM candidates WHERE LOWER(name) LIKE '%' || LOWER(:searchQuery) || '%'")
+    fun searchCandidates(searchQuery: String): Flow<List<CandidateEntity>>
+
+    @Query("SELECT * FROM candidates WHERE LOWER(name) LIKE '%' || LOWER(:searchQuery) || '%' AND favorite = 1")
+    fun searchFavoriteCandidates(searchQuery: String): Flow<List<CandidateEntity>>
+
 }

@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,13 +16,14 @@ import com.example.vitesseapp.databinding.FragmentTabBinding
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class TousTabFragment : Fragment() {
+class AllTabFragment : Fragment(), TabFragment {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerAdapter
-    private val viewModel: CandidateViewModel by viewModel()
+    private val viewModel: CandidateViewModel by activityViewModel()
     private var _binding: FragmentTabBinding? = null
     private val binding get() = _binding!!
 
@@ -44,15 +47,18 @@ class TousTabFragment : Fragment() {
 
     private fun observeCandidates() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.candidates.collect { candidates ->
-                adapter.updateCandidates(candidates)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.candidates.collect { candidates ->
+                    adapter.updateCandidates(candidates)
+                }
             }
         }
     }
 
+
     override fun onResume() {
         super.onResume()
-        viewModel.loadCandidates()
+        viewModel.loadCandidates("")
     }
 
 
@@ -69,10 +75,14 @@ class TousTabFragment : Fragment() {
     companion object {
         private const val ARG_TAB_TITLE = "arg_tab_title"
 
-        fun newInstance(tabTitle: String) = TousTabFragment().apply {
+        fun newInstance(tabTitle: String) = AllTabFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_TAB_TITLE, tabTitle)
             }
         }
+    }
+
+    override fun updateSearch(query: String) {
+        viewModel.loadCandidates(query)
     }
 }

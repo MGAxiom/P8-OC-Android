@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.FragmentTabBinding
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavorisTabFragment : Fragment() {
+class FavoritesTabFragment : Fragment(), TabFragment {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerAdapter
     private val viewModel: CandidateViewModel by viewModel()
@@ -46,15 +47,17 @@ class FavorisTabFragment : Fragment() {
 
     private fun observeFavoriteCandidates() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.favoriteCandidates.collect { favorites ->
-                adapter.updateCandidates(favorites)
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favoriteCandidates.collect { favorites ->
+                    adapter.updateCandidates(favorites)
+                }
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadFavouriteCandidates()
+        viewModel.loadFavoriteCandidates("")
     }
 
     override fun onDestroyView() {
@@ -65,10 +68,14 @@ class FavorisTabFragment : Fragment() {
     companion object {
         private const val ARG_TAB_TITLE = "arg_tab_title"
 
-        fun newInstance(tabTitle: String) = FavorisTabFragment().apply {
+        fun newInstance(tabTitle: String) = FavoritesTabFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_TAB_TITLE, tabTitle)
             }
         }
+    }
+
+    override fun updateSearch(query: String) {
+        viewModel.loadFavoriteCandidates(query)
     }
 }

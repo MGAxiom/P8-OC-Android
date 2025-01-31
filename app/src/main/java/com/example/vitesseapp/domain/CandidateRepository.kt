@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.map
 class CandidateRepository(private val candidateDao: CandidateDao) {
 
     suspend fun insertInitialCandidates() {
-        val placeholderImageUri = Uri.parse("android.resource://com.example.vitesseapp/${R.drawable.avatar_gris_placeholder}")
+        val placeholderImageUri =
+            Uri.parse("android.resource://com.example.vitesseapp/${R.drawable.avatar_gris_placeholder}")
         val placeholderImageString = placeholderImageUri.toString()
 
         val candidates = listOf(
@@ -64,8 +65,16 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
         return candidateDao.getCandidateById(id)?.toDomainModel()
     }
 
-    suspend fun searchCandidates(query: String): List<Candidate> {
-        return candidateDao.searchCandidates(query).map { it.toDomainModel() }
+    suspend fun searchCandidates(query: String): Flow<List<Candidate>> {
+        return candidateDao.searchCandidates(query).map { entities ->
+            entities.map { it.toDomainModel() }
+        }
+    }
+
+    suspend fun searchFavouriteCandidates(query: String): Flow<List<Candidate>> {
+        return candidateDao.searchFavoriteCandidates(query).map { entities ->
+            entities.map { it.toDomainModel() }
+        }
     }
 
     fun getAllFavoriteCandidates(): Flow<List<Candidate>> {
