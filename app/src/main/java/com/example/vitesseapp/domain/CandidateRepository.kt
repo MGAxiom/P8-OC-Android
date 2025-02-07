@@ -54,7 +54,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
     }
 
     suspend fun toggleFavoriteStatus(candidate: Candidate) {
-        candidateDao.updateCandidate(candidate.id, !candidate.favorite)
+        candidateDao.toggleFavoriteStatus(candidate.id)
     }
 
     suspend fun deleteCandidate(candidate: Candidate) {

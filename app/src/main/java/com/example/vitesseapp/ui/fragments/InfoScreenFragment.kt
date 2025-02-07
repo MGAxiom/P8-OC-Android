@@ -1,6 +1,5 @@
 package com.example.vitesseapp.ui.fragments
 
-import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -46,16 +44,17 @@ class InfoScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_global_home)
+            findNavController().navigate(R.id.homeFragment)
         }
+        viewModel.loadCandidateById(args.candidateId)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getCandidateById(args.candidateId).collect { candidate ->
+            viewModel.currentCandidate.collect { candidate ->
                 withContext(Dispatchers.Main) {
                     candidate?.let {
                         displayCandidateInfo(it)
                         setupContactButton(it)
-                        toggleFavoriteButton(it)
+                        setupFavoriteButton()
                     }
                 }
             }
@@ -71,7 +70,7 @@ class InfoScreenFragment : Fragment() {
         binding.notesText.text = candidate.notes
         binding.birthdayText.text = formatDateWithYears(candidate.birthday)
         binding.salaryEurText.text = "${candidate.expectedSalary} €"
-        setupFavoriteIcon(candidate.favorite)
+        updateFavoriteIcon(candidate.favorite)
     }
 
     private fun setupContactButton(candidate: Candidate) {
@@ -86,18 +85,15 @@ class InfoScreenFragment : Fragment() {
         }
     }
 
-    private fun toggleFavoriteButton(candidate: Candidate) {
+    private fun setupFavoriteButton() {
         binding.favoriteButton.setOnClickListener {
-            viewModel.toggleFavorite(candidate)
-            binding.favoriteButton.setImageResource( if (candidate.favorite)
-                R.drawable.favorite_star_24 else R.drawable.star_outline
-            )
+            viewModel.toggleFavorite()
         }
     }
 
-    private fun setupFavoriteIcon(isFavorite: Boolean) {
-        binding.favoriteButton.setImageResource( if (isFavorite)
-            R.drawable.favorite_star_24 else R.drawable.star_outline
+    private fun updateFavoriteIcon(isFavorite: Boolean) {
+        binding.favoriteButton.setImageResource(
+            if (isFavorite) R.drawable.favorite_star_24 else R.drawable.star_outline
         )
     }
 

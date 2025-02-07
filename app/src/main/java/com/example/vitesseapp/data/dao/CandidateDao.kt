@@ -4,8 +4,6 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
-import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.domain.CandidateEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -23,8 +21,8 @@ interface CandidateDao {
     @Insert
     suspend fun insertCandidate(candidate: CandidateEntity): Long
 
-    @Query ("UPDATE candidates SET favorite = :isFavorite WHERE id = :candidateId")
-    suspend fun updateCandidate(candidateId: Int, isFavorite: Boolean)
+    @Query ("UPDATE candidates SET favorite = NOT favorite WHERE id = :candidateId")
+    suspend fun toggleFavoriteStatus(candidateId: Int)
 
     @Delete
     suspend fun deleteCandidate(candidate: CandidateEntity)

@@ -13,12 +13,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
-class CandidateViewModel(private val repository: CandidateRepository): ViewModel() {
+class CandidateViewModel(private val repository: CandidateRepository) : ViewModel() {
 
     private val searchQuery = MutableStateFlow("")
     internal val candidates = MutableStateFlow<List<Candidate>>(emptyList())
     internal val favoriteCandidates = MutableStateFlow<List<Candidate>>(emptyList())
-    internal val candidateDetails = MutableStateFlow<Candidate?>(null)
+    internal val currentCandidate = MutableStateFlow<Candidate?>(null)
     val createdId = MutableStateFlow(0)
 
     init {
@@ -60,9 +60,16 @@ class CandidateViewModel(private val repository: CandidateRepository): ViewModel
         createdId.value = repository.insertCandidate(candidate).toInt()
     }
 
-    fun toggleFavorite(candidate: Candidate) = viewModelScope.launch {
-        repository.toggleFavoriteStatus(candidate)
+    fun toggleFavorite() = viewModelScope.launch {
+        currentCandidate.value?.let { candidate ->
+            val updatedCandidate = candidate.copy(favorite = !candidate.favorite)
+            repository.toggleFavoriteStatus(updatedCandidate)
+            currentCandidate.value = updatedCandidate
+        }
+    }
 
+    fun loadCandidateById(id: Int) = viewModelScope.launch {
+        currentCandidate.value = repository.getCandidateById(id)
     }
 
     fun deleteCandidate(candidate: Candidate) = viewModelScope.launch {
