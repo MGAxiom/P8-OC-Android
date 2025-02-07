@@ -3,7 +3,9 @@ package com.example.vitesseapp.data.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.vitesseapp.domain.CandidateEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,8 +20,8 @@ interface CandidateDao {
     @Query("SELECT * FROM candidates WHERE id = :id")
     suspend fun getCandidateById(id: Int): CandidateEntity?
 
-    @Insert
-    suspend fun insertCandidate(candidate: CandidateEntity): Long
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCandidateOrUpdate(candidate: CandidateEntity): Long
 
     @Query ("UPDATE candidates SET favorite = NOT favorite WHERE id = :candidateId")
     suspend fun toggleFavoriteStatus(candidateId: Int)

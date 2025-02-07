@@ -1,5 +1,6 @@
 package com.example.vitesseapp.ui.fragments
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Build
@@ -15,13 +16,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.vitesseapp.R
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.DetailScreenFragmentBinding
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
 import com.example.vitesseapp.utils.formatDate
-import com.example.vitesseapp.utils.formatDateWithYears
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Calendar
@@ -33,6 +34,7 @@ class AddCandidateFragment : Fragment() {
     private var birthday: Long = 0
     private lateinit var pickImage: ActivityResultLauncher<String>
     private var pickedImageUri: Uri? = null
+    var isEditMode = false
 
 
     override fun onCreateView(
@@ -56,6 +58,10 @@ class AddCandidateFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val args: AddCandidateFragmentArgs by navArgs()
+        isEditMode = args.isEditMode
+        setupEditMode()
+
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigate(R.id.homeFragment)
         }
@@ -70,8 +76,9 @@ class AddCandidateFragment : Fragment() {
 
         binding.fabAddCandidate.setOnClickListener {
             if (validateFields()) {
-                viewModel.insertCandidate(
+                viewModel.insertOrUpdateCandidate(
                     Candidate(
+                        id = if (isEditMode) args.candidateId else null,
                         name = binding.editTextFirstName.text.toString()
                                 + " "
                                 + binding.editTextLastName.text.toString(),
@@ -87,6 +94,7 @@ class AddCandidateFragment : Fragment() {
                     navigateToInfoScreen()
                 }
             }
+
         }
     }
 
@@ -97,7 +105,6 @@ class AddCandidateFragment : Fragment() {
 
     private fun validateFields(): Boolean {
         var isValid = true
-
         if (binding.editTextFirstName.text.isNullOrEmpty()) {
             binding.textInputLayoutFirstName.error = "Mandatory field"
             isValid = false
@@ -166,7 +173,8 @@ class AddCandidateFragment : Fragment() {
             viewModel.createdId.collect { id ->
                 id.let {
                     findNavController().navigate(
-                        AddCandidateFragmentDirections.actionDetailScreenFragmentToInfoScreenFragment(id)
+                        AddCandidateFragmentDirections
+                            .actionDetailScreenFragmentToInfoScreenFragment(id)
                     )
                 }
             }
@@ -176,5 +184,26 @@ class AddCandidateFragment : Fragment() {
 
     private fun launchPhotoPicker() {
         pickImage.launch("image/*")
+    }
+
+    @SuppressLint("NewApi")
+    private fun setupEditMode() {
+        val args: AddCandidateFragmentArgs by navArgs()
+        if (isEditMode) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val candidate: Candidate? = viewModel.getCandidateById(args.candidateId)
+                candidate?.let {
+                    binding.toolbar.title = "Edit candidate"
+                    binding.editTextNote.setText(candidate.notes)
+                    binding.editTextFirstName.setText(candidate.name.split(" ")[0])
+                    binding.editTextLastName.setText(candidate.name.split(" ")[1])
+                    binding.editTextPhone.setText(candidate.phone.toString())
+                    binding.editTextEmail.setText(candidate.email)
+                    binding.editTextMoney.setText(candidate.expectedSalary.toString())
+                    binding.editTextDate.setText(formatDate(candidate.birthday))
+                    birthday = candidate.birthday
+                }
+            }
+        }
     }
 }

@@ -46,8 +46,14 @@ class RecyclerAdapter(
         val candidate = candidates[position]
         holder.bind(candidate.name, candidate.notes, candidate.imageResUri)
         holder.itemView.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(candidate.id)
-            it.findNavController().navigate(action)
+            val action = candidate.id?.let { candidate ->
+                HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(
+                    candidate
+                )
+            }
+            if (action != null) {
+                it.findNavController().navigate(action)
+            }
         }
     }
 

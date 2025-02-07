@@ -28,7 +28,11 @@ class HomeFragment : Fragment() {
     private val viewModel: CandidateViewModel by activityViewModel()
     private lateinit var viewPagerAdapter: ViewPagerAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = HomeScreenFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,7 +41,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fabAddCandidate.setOnClickListener {
-            findNavController().navigate(R.id.action_homescreenFragment_to_addCandidateFragment)
+            val action = HomeFragmentDirections.actionHomescreenFragmentToAddCandidateFragment(
+                candidateId = 0,
+                isEditMode = false
+            )
+            findNavController().navigate(action)
         }
 
         setupViewPager()
@@ -63,6 +71,7 @@ class HomeFragment : Fragment() {
                 viewModel.setSearchQuery(query)
                 updateCurrentTab(query)
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })

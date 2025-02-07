@@ -55,6 +55,8 @@ class InfoScreenFragment : Fragment() {
                         displayCandidateInfo(it)
                         setupContactButton(it)
                         setupFavoriteButton()
+                        setupDeleteButton(it)
+                        setupEditButton(it)
                     }
                 }
             }
@@ -95,6 +97,25 @@ class InfoScreenFragment : Fragment() {
         binding.favoriteButton.setImageResource(
             if (isFavorite) R.drawable.favorite_star_24 else R.drawable.star_outline
         )
+    }
+
+    private fun setupDeleteButton(currentCandidate: Candidate) {
+        binding.deleteButton.setOnClickListener {
+            viewModel.deleteCandidate(currentCandidate)
+            findNavController().navigate(R.id.homeFragment)
+        }
+    }
+
+    private fun setupEditButton(currentCandidate: Candidate) {
+        binding.editButton.setOnClickListener {
+            val action = currentCandidate.id?.let { candidate ->
+                InfoScreenFragmentDirections.actionInfoScreenFragmentToDetailScreenFragment(
+                    candidate, true)
+            }
+            if (action != null) {
+                findNavController().navigate(action)
+            }
+        }
     }
 
     override fun onDestroyView() {

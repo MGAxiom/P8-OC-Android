@@ -39,7 +39,7 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
             ),
         )
         candidates.forEach { candidate ->
-            candidateDao.insertCandidate(candidate.toEntity())
+            candidateDao.insertCandidateOrUpdate(candidate.toEntity())
         }
     }
 
@@ -50,11 +50,11 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
     }
 
     suspend fun insertCandidate(candidate: Candidate): Long {
-        return candidateDao.insertCandidate(candidate.toEntity())
+        return candidateDao.insertCandidateOrUpdate(candidate.toEntity())
     }
 
     suspend fun toggleFavoriteStatus(candidate: Candidate) {
-        candidateDao.toggleFavoriteStatus(candidate.id)
+        candidate.id?.let { candidateDao.toggleFavoriteStatus(it) }
     }
 
     suspend fun deleteCandidate(candidate: Candidate) {
@@ -65,13 +65,13 @@ class CandidateRepository(private val candidateDao: CandidateDao) {
         return candidateDao.getCandidateById(id)?.toDomainModel()
     }
 
-    suspend fun searchCandidates(query: String): Flow<List<Candidate>> {
+    fun searchCandidates(query: String): Flow<List<Candidate>> {
         return candidateDao.searchCandidates(query).map { entities ->
             entities.map { it.toDomainModel() }
         }
     }
 
-    suspend fun searchFavouriteCandidates(query: String): Flow<List<Candidate>> {
+    fun searchFavouriteCandidates(query: String): Flow<List<Candidate>> {
         return candidateDao.searchFavoriteCandidates(query).map { entities ->
             entities.map { it.toDomainModel() }
         }

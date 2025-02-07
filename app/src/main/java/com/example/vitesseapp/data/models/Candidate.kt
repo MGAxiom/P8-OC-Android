@@ -1,7 +1,7 @@
 package com.example.vitesseapp.data.models
 
 data class Candidate(
-    val id: Int = 0,
+    val id: Int? = null,
     val name: String,
     val birthday: Long,
     val favorite: Boolean,

@@ -4,13 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.domain.CandidateRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class CandidateViewModel(private val repository: CandidateRepository) : ViewModel() {
@@ -56,7 +51,7 @@ class CandidateViewModel(private val repository: CandidateRepository) : ViewMode
         }
     }
 
-    fun insertCandidate(candidate: Candidate) = viewModelScope.launch {
+    fun insertOrUpdateCandidate(candidate: Candidate) = viewModelScope.launch {
         createdId.value = repository.insertCandidate(candidate).toInt()
     }
 
@@ -76,14 +71,7 @@ class CandidateViewModel(private val repository: CandidateRepository) : ViewMode
         repository.deleteCandidate(candidate)
     }
 
-//    suspend fun getCandidateById(id: Int): Flow<Candidate?> = flow {
-//        emit(repository.getCandidateById(id))
-//    }
-//
-//    fun searchCandidates(query: String) = viewModelScope.launch {
-//        repository.searchCandidates(query).collect { candidateList ->
-//            candidates.value = candidateList
-//        }
-//
-//    }
+    suspend fun getCandidateById(id: Int): Candidate? {
+        return repository.getCandidateById(id)
+    }
 }
