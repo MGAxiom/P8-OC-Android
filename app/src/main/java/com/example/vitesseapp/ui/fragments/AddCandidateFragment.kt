@@ -57,7 +57,7 @@ class AddCandidateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.homeFragment)
         }
 
         binding.imageView.setOnClickListener {
@@ -69,7 +69,6 @@ class AddCandidateFragment : Fragment() {
         }
 
         binding.fabAddCandidate.setOnClickListener {
-            var createdId = 0
             if (validateFields()) {
                 viewModel.insertCandidate(
                     Candidate(

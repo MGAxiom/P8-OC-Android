@@ -16,19 +16,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
 
     override fun getItemCount(): Int = fragments.size
 
-    override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> AllTabFragment.newInstance("Tous")
-            1 -> FavoritesTabFragment.newInstance("Favoris")
-            else -> throw IllegalArgumentException("Invalid position $position")
-        }
-    }
+    override fun createFragment(position: Int): Fragment = fragments[position]
 
-    fun getFragment(position: Int): TabFragment? {
-        return try {
-            createFragment(position) as? TabFragment
-        } catch (e: Exception) {
-            null
-        }
-    }
+    fun getFragment(position: Int): TabFragment = fragments[position] as TabFragment
 }

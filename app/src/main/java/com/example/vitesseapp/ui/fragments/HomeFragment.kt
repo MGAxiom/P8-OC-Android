@@ -35,6 +35,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.fabAddCandidate.setOnClickListener {
+            findNavController().navigate(R.id.action_homescreenFragment_to_addCandidateFragment)
+        }
+
         setupViewPager()
         setupSearch()
     }
@@ -65,7 +70,7 @@ class HomeFragment : Fragment() {
 
     private fun updateCurrentTab(query: String) {
         val currentPosition = binding.viewPager.currentItem
-        viewPagerAdapter.getFragment(currentPosition)?.updateSearch(query)
+        viewPagerAdapter.getFragment(currentPosition).updateSearch(query)
     }
 
     override fun onDestroyView() {

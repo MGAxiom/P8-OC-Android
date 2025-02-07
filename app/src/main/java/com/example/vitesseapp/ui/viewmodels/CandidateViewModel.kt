@@ -76,14 +76,14 @@ class CandidateViewModel(private val repository: CandidateRepository) : ViewMode
         repository.deleteCandidate(candidate)
     }
 
-    suspend fun getCandidateById(id: Int): Flow<Candidate?> = flow {
-        emit(repository.getCandidateById(id))
-    }
-
-    fun searchCandidates(query: String) = viewModelScope.launch {
-        repository.searchCandidates(query).collect { candidateList ->
-            candidates.value = candidateList
-        }
-
-    }
+//    suspend fun getCandidateById(id: Int): Flow<Candidate?> = flow {
+//        emit(repository.getCandidateById(id))
+//    }
+//
+//    fun searchCandidates(query: String) = viewModelScope.launch {
+//        repository.searchCandidates(query).collect { candidateList ->
+//            candidates.value = candidateList
+//        }
+//
+//    }
 }
