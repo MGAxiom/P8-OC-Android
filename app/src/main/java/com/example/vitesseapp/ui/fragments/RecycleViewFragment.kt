@@ -18,26 +18,12 @@ class RecyclerFragment : Fragment() {
     private var _binding: FragmentTabBinding? = null
     private val binding get() = _binding!!
 
-    companion object {
-        fun newInstance(dataList: ArrayList<String>): RecyclerFragment {
-            val fragment = RecyclerFragment()
-            val args = Bundle()
-            args.putStringArrayList("data", dataList)
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTabBinding.inflate(inflater, container, false)
         recyclerView = binding.recyclerView
-
-
-        val dataList = arguments?.getStringArrayList("data") ?: arrayListOf()
-        val descriptionList = arguments?.getStringArrayList("description") ?: arrayListOf()
 
         adapter = RecyclerAdapter(emptyList())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

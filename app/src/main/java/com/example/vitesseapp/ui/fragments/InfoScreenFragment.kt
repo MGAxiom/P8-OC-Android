@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -88,9 +91,12 @@ class InfoScreenFragment : Fragment() {
     }
 
     private fun setupFavoriteButton() {
-        binding.favoriteButton.setOnClickListener {
+        val favoriteButton = binding.favoriteButton
+        favoriteButton.isLongClickable = true
+        favoriteButton.setOnClickListener {
             viewModel.toggleFavorite()
         }
+        TooltipCompat.setTooltipText(favoriteButton, "Favorites")
     }
 
     private fun updateFavoriteIcon(isFavorite: Boolean) {
@@ -100,14 +106,19 @@ class InfoScreenFragment : Fragment() {
     }
 
     private fun setupDeleteButton(currentCandidate: Candidate) {
-        binding.deleteButton.setOnClickListener {
-            viewModel.deleteCandidate(currentCandidate)
-            findNavController().navigate(R.id.homeFragment)
+        val deleteButton = binding.deleteButton
+        deleteButton.isLongClickable = true
+        deleteButton.setOnClickListener {
+            showDeleteButtonDialog(currentCandidate)
         }
+        TooltipCompat.setTooltipText(deleteButton, "Delete")
     }
 
     private fun setupEditButton(currentCandidate: Candidate) {
-        binding.editButton.setOnClickListener {
+        val editButton = binding.editButton
+        editButton.isLongClickable = true
+        TooltipCompat.setTooltipText(editButton, "Edit")
+        editButton.setOnClickListener {
             val action = currentCandidate.id?.let { candidate ->
                 InfoScreenFragmentDirections.actionInfoScreenFragmentToDetailScreenFragment(
                     candidate, true)
@@ -116,6 +127,19 @@ class InfoScreenFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
+    }
+
+    private fun showDeleteButtonDialog(currentCandidate: Candidate) {
+        AlertDialog.Builder(requireContext(), R.style.MyAlertDialogTheme)
+            .setTitle("Deletion")
+            .setMessage("Are you sure you want to delete this candidate?")
+            .setPositiveButton("Confirm") { _, _ ->
+                viewModel.deleteCandidate(currentCandidate)
+                Toast.makeText(requireContext(), "Candidate deleted", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.homeFragment)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     override fun onDestroyView() {

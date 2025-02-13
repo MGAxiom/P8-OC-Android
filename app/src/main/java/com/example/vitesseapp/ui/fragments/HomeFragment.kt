@@ -58,8 +58,8 @@ class HomeFragment : Fragment() {
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
-                0 -> tab.text = "Tous"
-                1 -> tab.text = "Favoris"
+                0 -> tab.text = R.string.all.toString()
+                1 -> tab.text = R.string.favorites.toString()
             }
         }.attach()
     }

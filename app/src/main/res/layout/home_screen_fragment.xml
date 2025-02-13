@@ -35,14 +35,14 @@
             app:tabTextColor="@color/material_dynamic_primary10">
 
             <com.google.android.material.tabs.TabItem
-                android:text="@string/tous"
+                android:text="@string/all"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:textAllCaps="false"
                 />
 
             <com.google.android.material.tabs.TabItem
-                android:text="@string/favoris"
+                android:text="@string/favorites"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:textAllCaps="false" />
