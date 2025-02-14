@@ -73,8 +73,12 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    //ImageLoading
+    //ImageUtils
     implementation(libs.glide)
+
+    //APIDependencies
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     
     //Room
     implementation(libs.androidx.room.runtime)
@@ -85,7 +89,6 @@ dependencies {
     //Koin
     implementation(libs.koin.android)
     implementation(libs.koin.android.v400)
-
 
     //testing
     testImplementation(libs.junit)

@@ -19,6 +19,7 @@ import com.example.vitesseapp.R
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.InfoScreenFragmentBinding
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
+import com.example.vitesseapp.ui.viewmodels.ExchangeApiViewModel
 import com.example.vitesseapp.utils.callCandidate
 import com.example.vitesseapp.utils.emailCandidate
 import com.example.vitesseapp.utils.formatDateWithYears
@@ -34,6 +35,7 @@ class InfoScreenFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: InfoScreenFragmentArgs by navArgs()
     private val viewModel: CandidateViewModel by viewModel()
+    private val exchangeViewModel: ExchangeApiViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +68,7 @@ class InfoScreenFragment : Fragment() {
         }
     }
 
-    private fun displayCandidateInfo(candidate: Candidate) {
+    private suspend fun displayCandidateInfo(candidate: Candidate) {
         Glide.with(requireContext())
             .load(Uri.parse(candidate.imageResUri))
             .placeholder(R.drawable.avatar_gris_placeholder)
@@ -75,6 +77,12 @@ class InfoScreenFragment : Fragment() {
         binding.notesText.text = candidate.notes
         binding.birthdayText.text = formatDateWithYears(candidate.birthday)
         binding.salaryEurText.text = "${candidate.expectedSalary} €"
+        viewLifecycleOwner.lifecycleScope.launch {
+            exchangeViewModel.convertCurrency((candidate.expectedSalary).toDouble())
+            exchangeViewModel.exchangeRate.collect() { convertedSalary ->
+                binding.salaryGbpText.text = "or £${convertedSalary} "
+            }
+        }
         updateFavoriteIcon(candidate.favorite)
     }
 
