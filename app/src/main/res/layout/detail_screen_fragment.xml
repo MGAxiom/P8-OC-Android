@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="Add your candidate">
+            app:title="@string/add_your_candidate">
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -76,7 +76,7 @@
                         android:id="@+id/editTextFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:hint="First name"
+                        android:hint="@string/first_name"
                         android:textColor="@android:color/black"
                         android:paddingStart="10dp"
                         android:paddingTop="12dp"
@@ -102,7 +102,7 @@
                     android:id="@+id/editTextLastName"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:hint="Name"
+                    android:hint="@string/name"
                     android:textColor="@android:color/black"
                     android:paddingStart="10dp"
                     android:paddingTop="12dp"
@@ -138,7 +138,7 @@
                         android:textColor="@android:color/black"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:hint="Phone"
+                        android:hint="@string/phone"
                         android:paddingStart="10dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"/>
@@ -218,7 +218,7 @@
                             android:paddingLeft="15dp"
                             android:paddingTop="5dp"
                             android:paddingBottom="15dp"
-                            android:text="Select a date" />
+                            android:text="@string/select_a_date" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -231,7 +231,7 @@
                                 android:paddingTop="5dp"
                                 android:textSize="25dp"
                                 android:layout_weight="1"
-                                android:text="Enter date" />
+                                android:text="@string/enter_date" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -301,7 +301,7 @@
                         android:id="@+id/editTextMoney"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:hint="Salary"
+                        android:hint="@string/salary"
                         android:textColor="@android:color/black"
                         android:paddingStart="10dp"
                         android:paddingTop="12dp"
@@ -338,7 +338,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:gravity="top|start"
-                        android:hint="Note"
+                        android:hint="@string/note"
                         android:textColor="@android:color/black"
                         android:paddingStart="10dp"
                         android:paddingTop="12dp"

@@ -20,11 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VitesseApp"
         android:localeConfig="@xml/locales_config"
-        tools:targetApi="31">
+        tools:targetApi="tiramisu">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.VitesseApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">VitesseApp</string>
-    <string name="hint_home_screen">Search a candidate</string>
+    <string name="search_candidate">Search a candidate</string>
     <string name="tab_section_name_1">Section 1</string>
     <string name="tab_section_name_2">Section 2</string>
     <string name="favorites">Favorites</string>
     <string name="all">All</string>
-    <string name="lorem_ipsum_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="lorem_ipsum_description" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="select_date">Select Date</string>
     <string name="date_format">jj/mm/aaaa</string>
     <string name="add_candidate_button">Add candidate button</string>
@@ -14,4 +14,29 @@
     <string name="birthday">Birthday</string>
     <string name="mm_dd_yyyy_x_years">MM/dd/yyyy (x years)</string>
     <string name="about">About</string>
+    <string name="deletion">Deletion</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="or">or £%s</string>
+    <string name="mandatory_field">Mandatory field</string>
+    <string name="toast_message">Candidate deleted</string>
+    <string name="message_phone">Only numbers are allowed</string>
+    <string name="message_format">Invalid format</string>
+    <string name="edit_candidate">Edit candidate</string>
+    <string name="confirmation_message">Are you sure you want to delete this candidate?</string>
+    <string name="sms">SMS</string>
+    <string name="e_mail">E-mail</string>
+    <string name="call">Call</string>
+    <string name="expected_salary">Expected Salary</string>
+    <string name="first_name">First name</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="enter_date">Enter date</string>
+    <string name="salary">Salary</string>
+    <string name="note">Note</string>
+    <string name="add_your_candidate">Add a candidate</string>
+    <string name="edit_your_candidate">Edit a candidate</string>
 </resources>

@@ -68,7 +68,7 @@ class InfoScreenFragment : Fragment() {
         }
     }
 
-    private suspend fun displayCandidateInfo(candidate: Candidate) {
+    private fun displayCandidateInfo(candidate: Candidate) {
         Glide.with(requireContext())
             .load(Uri.parse(candidate.imageResUri))
             .placeholder(R.drawable.avatar_gris_placeholder)
@@ -80,7 +80,7 @@ class InfoScreenFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             exchangeViewModel.convertCurrency((candidate.expectedSalary).toDouble())
             exchangeViewModel.exchangeRate.collect() { convertedSalary ->
-                binding.salaryGbpText.text = "or £${convertedSalary} "
+                binding.salaryGbpText.text = resources.getString(R.string.or, String.format("%.2f", convertedSalary))
             }
         }
         updateFavoriteIcon(candidate.favorite)
@@ -104,7 +104,7 @@ class InfoScreenFragment : Fragment() {
         favoriteButton.setOnClickListener {
             viewModel.toggleFavorite()
         }
-        TooltipCompat.setTooltipText(favoriteButton, "Favorites")
+        TooltipCompat.setTooltipText(favoriteButton, resources.getText(R.string.favorites))
     }
 
     private fun updateFavoriteIcon(isFavorite: Boolean) {
@@ -119,13 +119,13 @@ class InfoScreenFragment : Fragment() {
         deleteButton.setOnClickListener {
             showDeleteButtonDialog(currentCandidate)
         }
-        TooltipCompat.setTooltipText(deleteButton, "Delete")
+        TooltipCompat.setTooltipText(deleteButton, resources.getText(R.string.delete))
     }
 
     private fun setupEditButton(currentCandidate: Candidate) {
         val editButton = binding.editButton
         editButton.isLongClickable = true
-        TooltipCompat.setTooltipText(editButton, "Edit")
+        TooltipCompat.setTooltipText(editButton, resources.getText(R.string.edit))
         editButton.setOnClickListener {
             val action = currentCandidate.id?.let { candidate ->
                 InfoScreenFragmentDirections.actionInfoScreenFragmentToDetailScreenFragment(
@@ -139,14 +139,14 @@ class InfoScreenFragment : Fragment() {
 
     private fun showDeleteButtonDialog(currentCandidate: Candidate) {
         AlertDialog.Builder(requireContext(), R.style.MyAlertDialogTheme)
-            .setTitle("Deletion")
-            .setMessage("Are you sure you want to delete this candidate?")
-            .setPositiveButton("Confirm") { _, _ ->
+            .setTitle(R.string.deletion)
+            .setMessage(R.string.confirmation_message)
+            .setPositiveButton(R.string.confirm) { _, _ ->
                 viewModel.deleteCandidate(currentCandidate)
-                Toast.makeText(requireContext(), "Candidate deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.toast_message, Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.homeFragment)
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 

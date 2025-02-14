@@ -19,7 +19,7 @@
             android:autofillHints="name"
             android:background="@drawable/rounded_edittext"
             android:drawableEnd="@drawable/magnify_icon"
-            android:hint="@string/hint_home_screen"
+            android:hint="@string/search_candidate"
             android:inputType="textPersonName"
             android:textColor="@android:color/black"
             android:padding="15dp" />

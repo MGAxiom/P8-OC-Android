@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -34,7 +33,7 @@ class AddCandidateFragment : Fragment() {
     private var birthday: Long = 0
     private lateinit var pickImage: ActivityResultLauncher<String>
     private var pickedImageUri: Uri? = null
-    var isEditMode = false
+    private var isEditMode = false
 
 
     override fun onCreateView(
@@ -43,6 +42,8 @@ class AddCandidateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DetailScreenFragmentBinding.inflate(inflater, container, false)
+
+        binding.toolbar.title = resources.getText(R.string.edit_your_candidate)
 
         pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
@@ -106,31 +107,31 @@ class AddCandidateFragment : Fragment() {
     private fun validateFields(): Boolean {
         var isValid = true
         if (binding.editTextFirstName.text.isNullOrEmpty()) {
-            binding.textInputLayoutFirstName.error = "Mandatory field"
+            binding.textInputLayoutFirstName.error = R.string.mandatory_field.toString()
             isValid = false
         } else {
             binding.textInputLayoutFirstName.error = null
         }
 
         if (binding.editTextLastName.text.isNullOrEmpty()) {
-            binding.textInputLayoutLastName.error = "Mandatory field"
+            binding.textInputLayoutLastName.error = R.string.mandatory_field.toString()
             isValid = false
         } else {
             binding.textInputLayoutLastName.error = null
         }
 
         if (binding.editTextPhone.text.isNullOrEmpty()) {
-            binding.textInputLayoutPhone.error = "Mandatory field"
+            binding.textInputLayoutPhone.error = R.string.mandatory_field.toString()
             isValid = false
         } else if (!binding.editTextPhone.text.toString().matches(Regex("^[0-9]+$"))) {
-            binding.textInputLayoutPhone.error = "Only numbers are allowed"
+            binding.textInputLayoutPhone.error = R.string.message_phone.toString()
             isValid = false
         } else {
             binding.textInputLayoutPhone.error = null
         }
 
         if (!isValidEmail(binding.editTextEmail.text.toString())) {
-            binding.textInputLayoutEmail.error = "Invalid Format"
+            binding.textInputLayoutEmail.error = R.string.message_format.toString()
             isValid = false
         } else {
             binding.textInputLayoutEmail.error = null
@@ -193,7 +194,7 @@ class AddCandidateFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 val candidate: Candidate? = viewModel.getCandidateById(args.candidateId)
                 candidate?.let {
-                    binding.toolbar.title = "Edit candidate"
+                    binding.toolbar.title = resources.getText(R.string.edit_your_candidate)
                     binding.editTextNote.setText(candidate.notes)
                     binding.editTextFirstName.setText(candidate.name.split(" ")[0])
                     binding.editTextLastName.setText(candidate.name.split(" ")[1])

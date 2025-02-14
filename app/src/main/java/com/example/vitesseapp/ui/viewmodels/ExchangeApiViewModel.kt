@@ -2,7 +2,6 @@ package com.example.vitesseapp.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vitesseapp.api.ExchangeRateResponse
 import com.example.vitesseapp.domain.ExchangeRateRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

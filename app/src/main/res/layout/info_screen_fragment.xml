@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="11dp"
-                        android:text="Call"
+                        android:text="@string/call"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 
@@ -142,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="9dp"
-                        android:text="SMS"
+                        android:text="@string/sms"
                         android:textColor="@android:color/black" />
                 </LinearLayout>
 
@@ -173,7 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="E-mail"
+                        android:text="@string/e_mail"
 
                         android:textColor="@android:color/black" />
                 </LinearLayout>
@@ -248,7 +248,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
-                        android:text="Expected Salary"
+                        android:text="@string/expected_salary"
                         android:textColor="@android:color/black"
                         android:textSize="11sp"/>
 
