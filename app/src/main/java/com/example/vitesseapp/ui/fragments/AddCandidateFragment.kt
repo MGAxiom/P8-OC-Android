@@ -43,8 +43,6 @@ class AddCandidateFragment : Fragment() {
     ): View {
         _binding = DetailScreenFragmentBinding.inflate(inflater, container, false)
 
-        binding.toolbar.title = resources.getText(R.string.edit_your_candidate)
-
         pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 pickedImageUri = it
@@ -62,6 +60,8 @@ class AddCandidateFragment : Fragment() {
         val args: AddCandidateFragmentArgs by navArgs()
         isEditMode = args.isEditMode
         setupEditMode()
+
+        binding.toolbar.title = resources.getText(R.string.add_your_candidate)
 
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigate(R.id.homeFragment)
