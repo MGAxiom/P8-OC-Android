@@ -1,7 +1,5 @@
 package com.example.vitesseapp.domain
 
-import android.net.Uri
-import com.example.vitesseapp.R
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.data.dao.CandidateDao
 import com.example.vitesseapp.data.toDomainModel
@@ -11,45 +9,13 @@ import kotlinx.coroutines.flow.map
 
 class CandidateRepository(private val candidateDao: CandidateDao) {
 
-    suspend fun insertInitialCandidates() {
-        val placeholderImageUri =
-            Uri.parse("android.resource://com.example.vitesseapp/${R.drawable.avatar_gris_placeholder}")
-        val placeholderImageString = placeholderImageUri.toString()
-
-        val candidates = listOf(
-            Candidate(
-                name = "John Doe",
-                birthday = System.currentTimeMillis(),
-                favorite = false,
-                imageResUri = placeholderImageString,
-                phone = 123456789,
-                email = "john@example.com",
-                expectedSalary = 75000,
-                notes = "Experienced in Kotlin"
-            ),
-            Candidate(
-                name = "Alice Johnson",
-                birthday = System.currentTimeMillis(),
-                favorite = true,
-                imageResUri = placeholderImageString,
-                phone = 555555555,
-                email = "alice@example.com",
-                expectedSalary = 90000,
-                notes = "Certified PMP"
-            ),
-        )
-        candidates.forEach { candidate ->
-            candidateDao.insertCandidateOrUpdate(candidate.toEntity())
-        }
-    }
-
     fun getAllCandidates(): Flow<List<Candidate>> {
         return candidateDao.getAllCandidates().map { entities ->
             entities.map { it.toDomainModel() }
         }
     }
 
-    suspend fun insertCandidate(candidate: Candidate): Long {
+    suspend fun insertOrUpdateCandidate(candidate: Candidate): Long {
         return candidateDao.insertCandidateOrUpdate(candidate.toEntity())
     }
 

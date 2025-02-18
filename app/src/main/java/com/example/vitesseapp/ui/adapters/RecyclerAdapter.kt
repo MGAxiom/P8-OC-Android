@@ -1,6 +1,5 @@
 package com.example.vitesseapp.ui.adapters
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController

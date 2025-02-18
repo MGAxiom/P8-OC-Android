@@ -6,20 +6,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.example.vitesseapp.R
 import com.example.vitesseapp.databinding.HomeScreenFragmentBinding
 import com.example.vitesseapp.ui.adapters.ViewPagerAdapter
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.Locale.filter
 
 class HomeFragment : Fragment() {
 

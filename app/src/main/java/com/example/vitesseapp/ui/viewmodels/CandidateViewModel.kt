@@ -52,7 +52,7 @@ class CandidateViewModel(private val repository: CandidateRepository) : ViewMode
     }
 
     fun insertOrUpdateCandidate(candidate: Candidate) = viewModelScope.launch {
-        createdId.value = repository.insertCandidate(candidate).toInt()
+        createdId.value = repository.insertOrUpdateCandidate(candidate).toInt()
     }
 
     fun toggleFavorite() = viewModelScope.launch {
