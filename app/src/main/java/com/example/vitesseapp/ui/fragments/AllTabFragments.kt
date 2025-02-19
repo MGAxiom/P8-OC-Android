@@ -15,6 +15,9 @@ import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.FragmentTabBinding
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -26,7 +29,11 @@ class AllTabFragment : Fragment(), TabFragment {
     private var _binding: FragmentTabBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentTabBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -35,6 +42,7 @@ class AllTabFragment : Fragment(), TabFragment {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeCandidates()
+        observeLoadingState()
     }
 
     private fun setupRecyclerView() {
@@ -54,16 +62,28 @@ class AllTabFragment : Fragment(), TabFragment {
         }
     }
 
-    private fun updateUI(candidates: List<Candidate>) {
-        if (candidates.isEmpty()) {
-            binding.noDataTextView.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
-        } else {
-            binding.noDataTextView.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
-            adapter.updateCandidates(candidates)
+    private fun observeLoadingState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoading.collect { isLoading ->
+                    binding.loadingProgressBar.visibility =
+                        if (isLoading) View.VISIBLE else View.GONE
+                }
+            }
         }
     }
+
+    private fun updateUI(candidates: List<Candidate>) {
+        if (candidates.isNotEmpty()) {
+            binding.noDataTextView.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.GONE
+            binding.noDataTextView.visibility = View.VISIBLE
+        }
+        adapter.updateCandidates(candidates)
+    }
+
 
     override fun onResume() {
         super.onResume()

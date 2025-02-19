@@ -187,7 +187,7 @@ class AddCandidateFragment : Fragment() {
         pickImage.launch("image/*")
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "SetTextI18n")
     private fun setupEditMode() {
         val args: AddCandidateFragmentArgs by navArgs()
         if (isEditMode) {

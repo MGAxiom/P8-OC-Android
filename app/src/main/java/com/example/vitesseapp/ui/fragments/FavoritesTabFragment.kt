@@ -28,7 +28,7 @@ class FavoritesTabFragment : Fragment(), TabFragment {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTabBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,6 +37,7 @@ class FavoritesTabFragment : Fragment(), TabFragment {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeFavoriteCandidates()
+        observeLoadingState()
     }
 
     private fun setupRecyclerView() {
@@ -56,15 +57,27 @@ class FavoritesTabFragment : Fragment(), TabFragment {
         }
     }
 
+    private fun observeLoadingState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoading.collect { isLoading ->
+                    binding.loadingProgressBar.visibility =
+                        if (isLoading) View.VISIBLE else View.GONE
+                }
+            }
+        }
+    }
+
+
     private fun updateUI(candidates: List<Candidate>) {
-        if (candidates.isEmpty()) {
-            binding.noDataTextView.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
-        } else {
+        if (candidates.isNotEmpty()) {
             binding.noDataTextView.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
-            adapter.updateCandidates(candidates)
+        } else {
+            recyclerView.visibility = View.GONE
+            binding.noDataTextView.visibility = View.VISIBLE
         }
+        adapter.updateCandidates(candidates)
     }
 
     override fun onResume() {

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.domain.CandidateRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ class CandidateViewModel(private val repository: CandidateRepository) : ViewMode
     internal val candidates = MutableStateFlow<List<Candidate>>(emptyList())
     internal val favoriteCandidates = MutableStateFlow<List<Candidate>>(emptyList())
     internal val currentCandidate = MutableStateFlow<Candidate?>(null)
+    internal val isLoading = MutableStateFlow(false)
     val createdId = MutableStateFlow(0)
 
     init {
@@ -31,23 +33,32 @@ class CandidateViewModel(private val repository: CandidateRepository) : ViewMode
 
     fun loadCandidates(query: String) {
         viewModelScope.launch {
-            val allCandidates = if (query.isEmpty()) {
-                repository.getAllCandidates().first()
-            } else {
-                repository.searchCandidates("%$query%").first()
+            isLoading.value = true
+            try {
+                val allCandidates = if (query.isEmpty()) {
+                    repository.getAllCandidates().first()
+                } else {
+                    repository.searchCandidates("%$query%").first()
+                }
+                candidates.value = allCandidates
+            } catch (e: Exception) {
+                println("Error loading candidates: ${e.message}")
+            } finally {
+                isLoading.value = false
             }
-            candidates.value = allCandidates
         }
     }
 
     fun loadFavoriteCandidates(query: String) {
         viewModelScope.launch {
+            isLoading.value = true
             val favorites = if (query.isEmpty()) {
                 repository.getAllFavoriteCandidates().first()
             } else {
                 repository.searchFavouriteCandidates("%$query%").first()
             }
             favoriteCandidates.value = favorites
+            isLoading.value = false
         }
     }
 

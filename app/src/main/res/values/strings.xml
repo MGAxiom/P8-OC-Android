@@ -39,4 +39,5 @@
     <string name="note">Note</string>
     <string name="add_your_candidate">Add a candidate</string>
     <string name="edit_your_candidate">Edit a candidate</string>
+    <string name="no_candidates">No candidate</string>
 </resources>

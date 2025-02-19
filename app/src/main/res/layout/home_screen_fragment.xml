@@ -63,8 +63,9 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:contentDescription="@string/add_candidate_button"
-        android:backgroundTint="#DFD5EC"
-        android:src="@drawable/add_icon" />
+        android:src="@drawable/add_icon"
+        app:backgroundTint="#DFD5EC"
+        app:shapeAppearanceOverlay="@style/RectangularFAB"/>
 
 </FrameLayout>
 
