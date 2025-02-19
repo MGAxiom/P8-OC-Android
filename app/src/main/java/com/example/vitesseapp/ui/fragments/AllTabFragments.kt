@@ -26,7 +26,7 @@ class AllTabFragment : Fragment(), TabFragment {
     private var _binding: FragmentTabBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentTabBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -48,37 +48,31 @@ class AllTabFragment : Fragment(), TabFragment {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.candidates.collect { candidates ->
-                    adapter.updateCandidates(candidates)
+                    updateUI(candidates)
                 }
             }
         }
     }
 
+    private fun updateUI(candidates: List<Candidate>) {
+        if (candidates.isEmpty()) {
+            binding.noDataTextView.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        } else {
+            binding.noDataTextView.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            adapter.updateCandidates(candidates)
+        }
+    }
 
     override fun onResume() {
         super.onResume()
         viewModel.loadCandidates("")
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun navigateToDetailFragment(candidate: Candidate) {
-        val action = HomeFragmentDirections.actionHomescreenFragmentToInfoScreenFragment(1) // TO change with ID
-        findNavController().navigate(action)
-    }
-
-    companion object {
-        private const val ARG_TAB_TITLE = "arg_tab_title"
-
-        fun newInstance(tabTitle: String) = AllTabFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_TAB_TITLE, tabTitle)
-            }
-        }
     }
 
     override fun updateSearch(query: String) {

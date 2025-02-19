@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.FragmentTabBinding
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
@@ -49,9 +50,20 @@ class FavoritesTabFragment : Fragment(), TabFragment {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favoriteCandidates.collect { favorites ->
-                    adapter.updateCandidates(favorites)
+                    updateUI(favorites)
                 }
             }
+        }
+    }
+
+    private fun updateUI(candidates: List<Candidate>) {
+        if (candidates.isEmpty()) {
+            binding.noDataTextView.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        } else {
+            binding.noDataTextView.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            adapter.updateCandidates(candidates)
         }
     }
 
@@ -63,16 +75,6 @@ class FavoritesTabFragment : Fragment(), TabFragment {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val ARG_TAB_TITLE = "arg_tab_title"
-
-        fun newInstance(tabTitle: String) = FavoritesTabFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_TAB_TITLE, tabTitle)
-            }
-        }
     }
 
     override fun updateSearch(query: String) {

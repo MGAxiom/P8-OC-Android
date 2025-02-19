@@ -19,7 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
             app:title="@string/add_your_candidate"
-            android:background="@android:color/white">
+            android:background="#fdf7fe">
 
         </androidx.appcompat.widget.Toolbar>
 

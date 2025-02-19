@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+            android:background="#fdf7fe"
             app:navigationIcon="?attr/homeAsUpIndicator"
             app:title="John Doe">
 
