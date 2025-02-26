@@ -107,31 +107,31 @@ class AddCandidateFragment : Fragment() {
     private fun validateFields(): Boolean {
         var isValid = true
         if (binding.editTextFirstName.text.isNullOrEmpty()) {
-            binding.textInputLayoutFirstName.error = R.string.mandatory_field.toString()
+            binding.textInputLayoutFirstName.error = resources.getText(R.string.mandatory_field)
             isValid = false
         } else {
             binding.textInputLayoutFirstName.error = null
         }
 
         if (binding.editTextLastName.text.isNullOrEmpty()) {
-            binding.textInputLayoutLastName.error = R.string.mandatory_field.toString()
+            binding.textInputLayoutLastName.error = resources.getText(R.string.mandatory_field)
             isValid = false
         } else {
             binding.textInputLayoutLastName.error = null
         }
 
         if (binding.editTextPhone.text.isNullOrEmpty()) {
-            binding.textInputLayoutPhone.error = R.string.mandatory_field.toString()
+            binding.textInputLayoutPhone.error = resources.getText(R.string.mandatory_field)
             isValid = false
         } else if (!binding.editTextPhone.text.toString().matches(Regex("^[0-9]+$"))) {
-            binding.textInputLayoutPhone.error = R.string.message_phone.toString()
+            binding.textInputLayoutPhone.error = resources.getText(R.string.message_phone)
             isValid = false
         } else {
             binding.textInputLayoutPhone.error = null
         }
 
         if (!isValidEmail(binding.editTextEmail.text.toString())) {
-            binding.textInputLayoutEmail.error = R.string.message_format.toString()
+            binding.textInputLayoutEmail.error = resources.getText(R.string.message_format)
             isValid = false
         } else {
             binding.textInputLayoutEmail.error = null
