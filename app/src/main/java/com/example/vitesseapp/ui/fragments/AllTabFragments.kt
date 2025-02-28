@@ -8,24 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitesseapp.data.models.Candidate
 import com.example.vitesseapp.databinding.FragmentTabBinding
 import com.example.vitesseapp.ui.adapters.RecyclerAdapter
 import com.example.vitesseapp.ui.viewmodels.CandidateViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class AllTabFragment : Fragment(), TabFragment {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerAdapter
-    private val viewModel: CandidateViewModel by activityViewModel()
+    private val viewModel: CandidateViewModel by viewModel()
     private var _binding: FragmentTabBinding? = null
     private val binding get() = _binding!!
 
@@ -96,6 +92,8 @@ class AllTabFragment : Fragment(), TabFragment {
     }
 
     override fun updateSearch(query: String) {
-        viewModel.loadCandidates(query)
+        if (isAdded) {
+            viewModel.loadCandidates(query)
+        }
     }
 }

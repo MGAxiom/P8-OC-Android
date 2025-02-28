@@ -91,6 +91,8 @@ class FavoritesTabFragment : Fragment(), TabFragment {
     }
 
     override fun updateSearch(query: String) {
-        viewModel.loadFavoriteCandidates(query)
+        if (isAdded) {
+            viewModel.loadFavoriteCandidates(query)
+        }
     }
 }

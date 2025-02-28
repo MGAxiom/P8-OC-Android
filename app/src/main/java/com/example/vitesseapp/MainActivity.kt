@@ -15,11 +15,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        startKoin {
-            androidContext(this@MainActivity)
-            modules(listOf(databaseModule, networkModule, appModule))
-        }
-
         supportActionBar?.hide()
         enableEdgeToEdge()
         setContentView(R.layout.main_activity)
